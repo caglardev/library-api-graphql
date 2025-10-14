@@ -3,10 +3,11 @@ import { FavoritesApiResponseModel } from "../models";
 
 export class BookAPI extends RESTDataSource {
   // the Catstronauts catalog is hosted on this server
-  baseURL = "http://openlibrary.org/people/caglarcercinli/lists/OL305534L/";
+  baseURL = "http://openlibrary.org/";
 
   getFavorites() {
-    const result = this.get<FavoritesApiResponseModel[]>("seeds.json");
-    return result;
+    return this.get<FavoritesApiResponseModel[]>(
+      "people/caglarcercinli/lists/OL305534L/seeds.json"
+    );
   }
 }

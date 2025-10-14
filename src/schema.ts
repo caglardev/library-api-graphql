@@ -6,5 +6,8 @@ export const typeDefs = gql`
   }
   type Book {
     title: String!
+    type: String
+    last_update: String
+    full_url: String
   }
 `;
