@@ -1,22 +1,17 @@
-import { createApolloServer } from "./server/index";
-import { BookAPI } from "./datasources/book-api";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import { createApolloServer, createExpressApplication } from "./server/index";
+import { ApplicationModule } from "./services/serviceManager/Application.module";
+import * as http from "http";
 
 (async function () {
-  const application = {
-    context: async () => {
-      const { cache } = server;
-      return {
-        dataSources: {
-          bookAPI: new BookAPI({ cache }),
-        },
-      };
-    },
-  };
+  const application = await ApplicationModule();
   const server = createApolloServer();
-  const { url } = await startStandaloneServer(server, application);
-  console.log(`
-    🚀  Server is running!
-    📭  Query at  ${url}
-  `);
+
+  await server.start();
+
+  const app = createExpressApplication(server, application);
+  const httpServer = http.createServer(app);
+
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: 4000 }, resolve)
+  );
 })();
