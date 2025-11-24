@@ -9,5 +9,6 @@ export const typeDefs = gql`
     type: String
     last_update: String
     full_url: String
+    resumepoint: Int
   }
 `;
