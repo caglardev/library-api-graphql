@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  mock-rest:
+    image: clue/json-server
+    container_name: mock-rest
+    volumes:
+      - ./mock-data.json:/data/db.json
+    command: ["--watch", "/data/db.json"]
+    ports:
+      - "3001:80"
