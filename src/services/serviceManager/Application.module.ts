@@ -9,10 +9,24 @@ export type ApplicationModule = {
 export async function ApplicationModule(): Promise<ApplicationModule> {
   return {
     context: async () => {
+      const dataSources: any = {};
+
       return {
-        dataSources: {
-          bookAPI: new BookAPI(),
-          resumepointAPI: new ResumepointAPI(),
+        get dataSources() {
+          return {
+            get bookAPI() {
+              if (!dataSources.bookAPI) {
+                dataSources.bookAPI = new BookAPI();
+              }
+              return dataSources.bookAPI;
+            },
+            get resumepointAPI() {
+              if (!dataSources.resumepointAPI) {
+                dataSources.resumepointAPI = new ResumepointAPI();
+              }
+              return dataSources.resumepointAPI;
+            },
+          };
         },
       };
     },

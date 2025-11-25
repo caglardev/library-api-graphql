@@ -3,12 +3,12 @@ import { ApplicationModule } from "./services/serviceManager/Application.module"
 import * as http from "http";
 
 (async function () {
-  const application = await ApplicationModule();
+  const applicationModule = await ApplicationModule();
   const server = createApolloServer();
 
   await server.start();
 
-  const app = createExpressApplication(server, application);
+  const app = createExpressApplication(server, applicationModule);
   const httpServer = http.createServer(app);
 
   await new Promise<void>((resolve) =>

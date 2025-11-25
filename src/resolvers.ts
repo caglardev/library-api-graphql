@@ -8,10 +8,7 @@ export const resolvers = {
   },
   Book: {
     resumepoint: async (parent, __, { dataSources }, info) => {
-      const resumepointData = (
-        await dataSources.resumepointAPI.getResumePoint()
-      ).resumepoint;
-      return resumepointData;
+      return (await dataSources.resumepointAPI.getResumePoint()).resumepoint;
     },
   },
 };
