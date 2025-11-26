@@ -11,14 +11,7 @@ export const buildContext = async (
   req: express.Request,
   application: ApplicationModule
 ) => {
-  const query = req.body.query;
-  const isResumepointQueried =
-    typeof query === "string" && query.includes("resumepoint");
-
-  if (isResumepointQueried) {
-    console.log("resumepoint is queried in this request");
-  }
-  return application.context(isResumepointQueried);
+  return application.context();
 };
 
 export function createApolloServer() {
