@@ -1,3 +1,4 @@
+import { hash } from "crypto";
 import { Book } from "./models";
 
 export const resolvers = {
@@ -7,8 +8,10 @@ export const resolvers = {
     },
   },
   Book: {
-    resumepoint: async (parent, __, { dataSources }, info) => {
-      return (await dataSources.resumepointAPI.getResumePoint()).resumepoint;
+    resumepoint: async (parent, __, { dataSources }) => {
+      const id = hash("sha1", parent.full_url);
+      return (await dataSources.resumepointAPI.getResumePoint(id)
+        .resumepoint;
     },
   },
 };

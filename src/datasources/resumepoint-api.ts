@@ -4,7 +4,8 @@ import { ResumepointApiResponseModel } from "../models";
 export class ResumepointAPI extends RESTDataSource {
   baseURL = "http://localhost:3001/";
 
-  getResumePoint() {
+  // TODO fetch id specific resumepoint
+  getResumePoint(id: string | undefined) {
     return this.get<ResumepointApiResponseModel>("resumepoint");
   }
 }
