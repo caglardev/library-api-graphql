@@ -10,8 +10,7 @@ export const resolvers = {
   Book: {
     resumepoint: async (parent, __, { dataSources }) => {
       const id = hash("sha1", parent.full_url);
-      return (await dataSources.resumepointAPI.getResumePoint(id)
-        .resumepoint;
+      return (await dataSources.resumepointAPI.getResumePoint(id)).resumepoint;
     },
   },
 };
