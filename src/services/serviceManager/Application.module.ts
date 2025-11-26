@@ -3,14 +3,13 @@ import { DataSourceContext } from "../../context";
 import { ResumepointAPI } from "../../datasources/resumepoint-api";
 
 export type ApplicationModule = {
-  context: () => Promise<DataSourceContext>;
+  context: (isResumepointQueried) => Promise<DataSourceContext>;
 };
 
 export async function ApplicationModule(): Promise<ApplicationModule> {
   return {
-    context: async () => {
+    context: async (isResumepointQueried) => {
       const dataSources: any = {};
-
       return {
         get dataSources() {
           return {
@@ -21,7 +20,7 @@ export async function ApplicationModule(): Promise<ApplicationModule> {
               return dataSources.bookAPI;
             },
             get resumepointAPI() {
-              if (!dataSources.resumepointAPI) {
+              if (isResumepointQueried) {
                 dataSources.resumepointAPI = new ResumepointAPI();
               }
               return dataSources.resumepointAPI;

@@ -7,8 +7,18 @@ import { json } from "body-parser";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 
-export const buildContext = async (application: ApplicationModule) => {
-  return application.context();
+export const buildContext = async (
+  req: express.Request,
+  application: ApplicationModule
+) => {
+  const query = req.body.query;
+  const isResumepointQueried =
+    typeof query === "string" && query.includes("resumepoint");
+
+  if (isResumepointQueried) {
+    console.log("resumepoint is queried in this request");
+  }
+  return application.context(isResumepointQueried);
 };
 
 export function createApolloServer() {
@@ -40,7 +50,7 @@ export function createExpressApplication(
     "/graphql",
     json(),
     expressMiddleware(server, {
-      context: () => buildContext(application),
+      context: ({ req }) => buildContext(req, application),
     })
   );
   return app;
